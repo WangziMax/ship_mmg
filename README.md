@@ -34,19 +34,22 @@ Please asscess index page.
 
 ### for Developer(Mac or Linux)
 1. Fork it ( http://github.com/taiga4112/ship_mmg/fork )
+
 2. Set developing environment
 ```bash
+$ cd 'yourworkspace'
+$ git clone git@github.com:youraccount/ship_mmg.git)
 $ virtualenv ship_mmg
 $ source ship_mmg/bin/activate
 $ pip install Flask numpy scipy
-$ git clone git@github.com:youraccount/ship_mmg.git)
 ```
+
 3. Start Flask app
 ```bash
-$ python ship_mmg/__init.py
+$ python ship_mmg/__init__.py
 ```
-4. [Access](http://localhost:5000/)
 
+4. [Access](http://localhost:5000/)
 
 ## Contribution
 1. Fork it ( http://github.com/taiga4112/ship_mmg/fork )
