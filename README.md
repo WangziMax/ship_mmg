@@ -42,8 +42,10 @@ $ pip install Flask numpy scipy
 $ git clone git@github.com:youraccount/ship_mmg.git)
 ```
 3. Start Flask app
+```bash
 $ python ship_mmg/__init.py
-
+```
+4. [Access](http://localhost:5000/)
 
 
 ## Contribution
