@@ -119,7 +119,14 @@
         </div>
         <div class="collapse navbar-collapse">
           <!--<li class="active"><a href="#">topic １</a></li>-->
+          <ul class="nav navbar-nav navbar-right">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Menu <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="https://github.com/taiga4112/ship_mmg" target="_blank">Git repository on GitHub</a></li>
+            </ul>
+          </ul>
         </div><!-- /.navbar-collapse -->  
+
       </div><!-- /.container-fluid -->
     </nav>
     {% block content %}{% endblock %}
