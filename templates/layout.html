@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/static/js/bootstrap.min.js"></script>
+
+    {% if title %}
+      <title>{{ title }}</title>
+    {% else %}
+      <title>Ship MMG</title>
+    {% endif %}
+    <!-- Bootstrap -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    {% if result %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawTrajectoryChart);
+      function drawTrajectoryChart() {
+        var dataTable = new google.visualization.DataTable();
+        dataTable.addColumn('number', 'X');
+        dataTable.addColumn('number', 'Trajectory');
+        dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+        dataTable.addRows([
+          {% for t,X in result: %}
+          [{{ X[6] }}, {{ X[7] }}, '<p>time : {{t}}<br/>delta: {{X[1]}}<br/>x : {{X[6]}}<br/><br/>y : {{X[7]}}<br/>r : {{X[4]}}</p>'],
+          {% endfor %}
+        ]);
+
+        var options = {
+          tooltip: {isHtml: true},
+          hAxis: {title: "X [m]"},
+          vAxis: {title: "Y [m]"},
+          explorer: {
+            actions: ['dragToZoom', 'rightClickToReset'],
+            keepInBounds: true,
+            maxZoomIn: 8.0
+          }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('trajectory_chart'));
+        chart.draw(dataTable, options);
+      }
+
+      google.charts.setOnLoadCallback(drawTurningAngularVelocityChart);
+      function drawTurningAngularVelocityChart() {
+        var dataTable = new google.visualization.DataTable();
+        dataTable.addColumn('number', 'time');
+        dataTable.addColumn('number', '\u03B4 [rad]');
+        dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+        dataTable.addColumn('number', '\u03A8 [rad]');
+        dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+        dataTable.addColumn('number', 'r [rad/s]');
+        dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
+        dataTable.addRows([
+          {% for t,X in result: %}
+          [{{ t }}, {{ X[1] }}, '<p>time : {{t}}<br/>\u03B4: {{X[1]}}<br/>\u03A8 : {{X[0]}}<br/><br/>r : {{X[4]}}', {{ X[0] }}, '<p>time : {{t}}<br/>\u03B4: {{X[1]}}<br/>\u03A8 : {{X[0]}}<br/><br/>r : {{X[4]}}', {{ X[4] }}, '<p>time : {{t}}<br/>\u03B4: {{X[1]}}<br/>\u03A8 : {{X[0]}}<br/><br/>r : {{X[4]}}'],
+          {% endfor %}
+        ]);
+
+        var options = {
+          tooltip: {isHtml: true},
+          hAxis: {title: "Time [s]"},
+          vAxis: {title: "[rad] or [rad/s]"},
+          colors: ["green", "purple", "red"],
+          explorer: {
+            actions: ['dragToZoom', 'rightClickToReset'],
+            keepInBounds: true,
+            maxZoomIn: 8.0
+          }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('turning_chart'));
+        chart.draw(dataTable, options);
+      }
+
+      window.onload = function(){
+        document.getElementById('download').addEventListener('click', function (e){
+          
+          var data = "time[s],psi[rad],delta[rad],u[m/s],v[m/s],r[rad/s],dr[rad/s^2],X[m],Y[m]";
+          {% for t,X in result: %}
+          data += "\r\n" + {{t}} +","+ {{X[0]}} +","+ {{X[1]}} +","+ {{X[2]}} +","+ {{X[3]}} +","+ {{X[4]}} +","+ {{X[5]}} +","+ {{X[6]}} +","+ {{X[7]}};
+          {% endfor %}
+
+          var array = [];
+          for (var i=0; i<data.length; i++){array.push(data.charCodeAt(i));}
+          var data = new Uint8Array(array);
+          var blob = new Blob([data] , {type: "text/csv;charset=utf-8;"});
+
+          if (window.navigator.msSaveBlob) {
+            e.preventDefault();
+            window.navigator.msSaveBlob(blob, this.getAttribute('download'));
+          } else {
+            this.href = URL.createObjectURL(blob);
+          }
+        });
+    }
+    </script>
+    {% endif %}
+  </head>
+  <body>
+    <nav class="navbar navbar-default" role="navigation"> 
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Ship MMG</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <!--<li class="active"><a href="#">topic １</a></li>-->
+        </div><!-- /.navbar-collapse -->  
+      </div><!-- /.container-fluid -->
+    </nav>
+    {% block content %}{% endblock %}
+  </body>
+</html>

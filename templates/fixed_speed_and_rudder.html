@@ -1,0 +1,188 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% if message %}
+<p class="lead">{{ message }}</p>
+{% endif %}
+
+<style type="text/css">
+<!--
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#input-box {
+  float: left;
+  width: 50%;
+}
+
+#output-box {
+  float: right;
+}
+
+-->
+</style>
+
+<div class="container">
+  <div id="setting">    
+    <form action="fsr" method="post" class="form-horizontal">
+      <h2>Simulation by fixed speed and rudder</h2>
+
+      <h4>Maneuvering condition</h4>
+
+      <h5>Rudder</h5>
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="delta0">&delta;0 : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="delta0" name="delta0" value="{{ delta0 }}"/>
+        </div>
+        <label class="control-label col-sm-0" for="unit_delta0"> [degree]</label>
+      </div>
+
+      <h5>Velocity</h5>
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="u0">u0 : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="u0" name="u0" value="{{ u0 }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_u0">[m/s]</label>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="v0">v0 : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="v0" name="v0" value="{{ v0 }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_v0">[m/s]</label>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="r0">r0 : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="r0" name="r0" value="{{ r0 }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_r0">[rad/s]</label>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="dr0">dr0 : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="dr0" name="dr0" value="{{ dr0 }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_r0">[rad/s&sup2;]</label>
+      </div>
+
+      
+      <h4>Specification</h4>
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="T1">T1 : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="T1" name="T1" value="{{ T1 }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_T1">[s]</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="T2">T2 : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="T2" name="T2" value="{{ T2 }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_T2">[s]</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="T3">T3 : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="T3" name="T3" value="{{ T3 }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_T3">[s]</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="T3v">T3v : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="T3v" name="T3v" value="{{ T3v }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_T3v">[s]</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="K">K : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="K" name="K" value="{{ K }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_K">[1/s]</label>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="Kv">Kv : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="Kv" name="Kv" value="{{ Kv }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_Kv">[1/s]</label>
+      </div>
+
+      <h4>Simulation settings</h4>
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="x0">x0 : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="x0" name="x0" value="{{ x0 }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_x0">[m]</label>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="y0">y0 : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="y0" name="y0" value="{{ y0 }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_y0">[m]</label>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="psi0">&Psi;0 : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="psi0" name="psi0" value="{{ psi0 }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_psi0">[m/s]</label>
+      </div>
+      
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="sampling">sampling : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="sampling" name="sampling" value="{{ sampling }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_duration">[-]</label>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-sm-2" for="duration">duration : </label>
+        <div class="col-sm-2">
+          <input type="number" step="0.001" class="form-control" id="duration" name="duration" value="{{ duration }}">
+        </div>
+        <label class="control-label col-sm-0" for="unit_duration">[s]</label>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-4 col-sm-10">
+          <button type="submit" class="btn btn-primary" id='action' name='action' value='cal'>Calculate</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  {% if result %}
+  <div id="result">
+    <table>
+      <tr>
+        <td><div id="turning_chart" style="width: 500px; height: 500px;"></div><td>
+        <td><div id="trajectory_chart" style="width: 500px; height: 500px;"></div><td>
+        <td><a href="#" id="download" download="result.csv">Result(CSV) Download</a></td>
+      </tr>
+    </table>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
