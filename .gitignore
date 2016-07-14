@@ -7,6 +7,10 @@ include/
 lib/
 pip-selfcheck.json
 
+# for Windows
+Scripts/
+tcl/
+
 # Flask stuff:
 instance/
 .webassets-cache
