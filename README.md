@@ -13,7 +13,7 @@ You can change the simulation condition and the specification of target ship. In
 This is a web-based application by using Flask and Python. Simulator is implemented based on Python, Numpy and Scipy.
 
 ## Demo
-Update soon...
+![Interface](https://github.com/taiga4112/ship_mmg/wiki/images/demo_readme.png "Interface")
 
 ## Requirement
 - Flask (0.11.1)
@@ -33,9 +33,10 @@ Please asscess index page.
 ## Install
 Update soon...
 
-## for Developer
-### Mac or Linux
-1. Fork it ([http://github.com/taiga4112/ship_mmg/fork](http://github.com/taiga4112/ship_mmg/fork)
+
+### for Developer
+#### Mac or Linux
+1. Fork it ([http://github.com/taiga4112/ship_mmg/fork](http://github.com/taiga4112/ship_mmg/fork))
 
 2. Set developing environment
 	```bash
@@ -53,8 +54,9 @@ Update soon...
 
 4. [Access](http://localhost:5000/)
 
-### Windows
-1. Fork it ([http://github.com/taiga4112/ship_mmg/fork](http://github.com/taiga4112/ship_mmg/fork)
+
+#### Windows
+1. Fork it ([http://github.com/taiga4112/ship_mmg/fork](http://github.com/taiga4112/ship_mmg/fork))
 
 2. Set developing environment
 	```bash
