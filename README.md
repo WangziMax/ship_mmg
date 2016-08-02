@@ -2,7 +2,7 @@
 "ship_mmg" is a web-based simulator based on Maneuvering Modeling Group (MMG) model for ship maneuvering.
 
 ## Description
-This software can simulate the state of ship maneuvering from the time-seriese information of rudder angle(&delta;[rad]).
+This software can simulate the state of ship maneuvering from the time-series information of rudder angle(&delta;[rad]).
 
 Example of the state of ship maneuvering is as follows:
 - &Psi; [rad]
@@ -10,7 +10,7 @@ Example of the state of ship maneuvering is as follows:
 - etc.
 
 You can change the simulation condition and the specification of target ship. In addition, you can get the simulation result of ship maneuvering by CSV data from web.
-This is a web-based application by using Flask and Python. Simulator is inplemented based on Python, Numpy and Scipy.
+This is a web-based application by using Flask and Python. Simulator is implemented based on Python, Numpy and Scipy.
 
 ## Demo
 Update soon...
@@ -31,10 +31,10 @@ Update soon...
 Please asscess index page.
 
 ## Install
+Update soon...
 
-
-### for Developer
-#### Mac or Linux
+## for Developer
+### Mac or Linux
 1. Fork it ([http://github.com/taiga4112/ship_mmg/fork](http://github.com/taiga4112/ship_mmg/fork)
 
 2. Set developing environment
@@ -53,7 +53,7 @@ Please asscess index page.
 
 4. [Access](http://localhost:5000/)
 
-#### Windows
+### Windows
 1. Fork it ([http://github.com/taiga4112/ship_mmg/fork](http://github.com/taiga4112/ship_mmg/fork)
 
 2. Set developing environment
